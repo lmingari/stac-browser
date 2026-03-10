@@ -1,0 +1,352 @@
+/* ===============================
+   BASE LAYOUT
+================================ */
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+#app {
+  display: flex;
+  height: 100vh;
+}
+
+.panel {
+  padding: 20px;
+  overflow: auto;
+}
+
+/* LEFT PANEL */
+
+.browser {
+  width: 350px;
+  border-right: 1px solid #ddd;
+  background: #fafafa;
+}
+
+/* RIGHT PANEL */
+
+.map {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+#map {
+  flex: 1;
+  width: 100%;
+  position: relative;
+}
+
+
+/* ===============================
+   FORM ELEMENTS
+================================ */
+
+label {
+  display: block;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+select,
+input,
+button {
+  width: 100%;
+  padding: 6px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+
+button {
+  cursor: pointer;
+}
+
+
+/* ===============================
+   SECTION BOX
+================================ */
+
+.section {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 15px;
+}
+
+.section h3 {
+  margin: 0 0 10px 0;
+  font-size: 15px;
+  text-align: center;
+  font-weight: 600;
+}
+
+
+/* ===============================
+   LIST CONTAINERS
+================================ */
+
+.item-list,
+.asset-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+
+/* ===============================
+   CARD BASE STYLE
+================================ */
+
+.item-card,
+.asset-card {
+
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+
+  padding: 10px;
+
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  column-gap: 10px;
+  row-gap: 6px;
+
+  font-size: 11px;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.asset-card {
+  position: relative;
+}
+
+.item-card {
+  grid-template-rows: auto auto;
+}
+
+
+/* ===============================
+   CARD INTERACTION
+================================ */
+
+.item-card:hover,
+.asset-card:hover {
+  border-color: #999;
+  background: #fafafa;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.item-card:has(input:checked),
+.asset-card:has(input:checked) {
+  background: #e8f2ff;
+}
+
+
+/* ===============================
+   RADIO
+================================ */
+
+.item-card input[type="radio"],
+.asset-card input[type="radio"] {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  margin-top: 3px;
+}
+
+
+/* ===============================
+   CARD CONTENT
+================================ */
+
+.item-header,
+.asset-header {
+  grid-column: 2;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-body,
+.asset-body {
+  grid-column: 2;
+  font-size: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+
+/* ===============================
+   TEXT STYLES
+================================ */
+
+.item-valid,
+.asset-title {
+  font-weight: 600;
+}
+
+.item-step,
+.asset-step {
+  color: #666;
+  background: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.item-header {
+  gap: 10px;
+}
+
+.item-id {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-created,
+.item-id,
+.asset-time,
+.asset-unit {
+  color: #777;
+}
+
+.asset-label {
+  color: #444;
+}
+
+.asset-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* ===============================
+   ASSET DOWNLOAD BUTTON
+================================ */
+
+.asset-card .btn-download {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+/* ===============================
+   ICON BUTTONS
+================================ */
+
+.btn,
+.btn-download {
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+
+  padding: 0;
+  margin: 0;
+
+  border: 1px solid #c8e6c9;
+  border-radius: 4px;
+
+  background: #e8f5e9;
+
+  color: #2e7d32;   /* icon color */
+
+  font-size: 14px;
+  line-height: 1;
+
+  box-sizing: border-box;
+
+  cursor: pointer;
+  text-decoration: none;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.btn-download:hover {
+
+  background: #c8e6c9;
+  border-color: #81c784;
+
+  color: #1b5e20;
+}
+
+.btn-download:visited {
+  color: #2e7d32;
+}
+
+/* ===============================
+   STEP NAVIGATION (MAP OVERLAY)
+================================ */
+
+.step-nav {
+
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: rgba(255,255,255,0.95);
+  border: 1px solid #ddd;
+  border-radius: 6px;
+
+  padding: 6px 8px;
+
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+
+  z-index: 10;
+}
+
+.step-nav button {
+
+  width: 28px;
+  height: 28px;
+
+  border: 1px solid #ccc;
+  border-radius: 4px;
+
+  background: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.step-nav button:hover {
+  background: #f2f2f2;
+}
+
+.step-nav button:active {
+  background: #e6e6e6;
+}
+
+.step-label {
+
+  min-width: 70px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: #333;
+}
