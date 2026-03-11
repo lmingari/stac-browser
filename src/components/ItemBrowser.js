@@ -132,39 +132,6 @@ export function ItemBrowser(container) {
         card.appendChild(body)
 
         list.appendChild(card)
- 
-
-//      const row = document.createElement("label")
-//      row.className = "item-row"
-//
-//      const radio = document.createElement("input")
-//      radio.type = "radio"
-//      radio.name = "item-selection"
-//
-//      const text = document.createElement("div")
-//      text.className = "item-text"
-//
-//      const valid = document.createElement("div")
-//      valid.className = "item-valid"
-//      valid.textContent =
-//        `Step ${item.properties["forecast:step"]} • Valid: ${formatDate(item.properties["forecast:valid_time"])}`
-//
-//      const meta = document.createElement("div")
-//      meta.className = "item-meta"
-//      meta.textContent =
-//        `ID: ${item.id}`
-//
-//      text.appendChild(valid)
-//      text.appendChild(meta)
-//
-//      radio.addEventListener("change", () => {
-//        setState("selectedItem", item)
-//      })
-//
-//      row.appendChild(radio)
-//      row.appendChild(text)
-//
-//          list.appendChild(row)
 
       })
 
@@ -199,13 +166,13 @@ function normalizeAssets(items) {
 
   items.forEach(item => {
 
-    const assetsByKey = {}
+    const assetsByVariable = {}
 
     Object.values(item.assets).forEach(asset => {
-      assetsByKey[asset.key] = asset
+      assetsByVariable[asset.variable] = asset
     })
 
-    item.assetsByKey = assetsByKey
+    item.assetsByVariable = assetsByVariable
 
   })
 

@@ -39,7 +39,7 @@ export function AssetList(container) {
       radio.type = "radio"
       radio.name = "asset"
 
-      if (state.selectedAsset?.key === asset.key) {
+      if (state.selectedAsset?.variable === asset.variable) {
         radio.checked = true
       }
 
@@ -54,7 +54,7 @@ export function AssetList(container) {
 
       const title = document.createElement("span")
       title.className = "asset-title"
-      title.textContent = asset.title || asset.key
+      title.textContent = asset.title || key
 
       const step = document.createElement("span")
       step.className = "asset-step"

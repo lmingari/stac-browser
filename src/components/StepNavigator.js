@@ -10,7 +10,7 @@ export function StepNavigator(container) {
 
   let sequence = []
   let index = -1
-  let variableKey = null
+  let variable = null
 
   document.addEventListener("selectedAssetChanged", rebuild)
   document.addEventListener("selectedItemChanged", syncIndex)
@@ -40,10 +40,10 @@ export function StepNavigator(container) {
       return
     }
 
-    variableKey = asset.key
+    variable = asset.variable
 
     sequence = state.items.filter(
-      item => item.assetsByKey?.[variableKey]
+      item => item.assetsByVariable?.[variable]
     )
 
     syncIndex()

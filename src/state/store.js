@@ -65,9 +65,9 @@ export function setState(key, value) {
     const oldAsset = state.selectedAsset
     const newItem = value
 
-    if (oldAsset && newItem?.assetsByKey) {
+    if (oldAsset && newItem?.assetsByVariable) {
 
-      const matchingAsset = newItem.assetsByKey[oldAsset.key]
+      const matchingAsset = newItem.assetsByVariable[oldAsset.variable]
 
       if (matchingAsset) {
 
