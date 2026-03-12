@@ -1,46 +1,50 @@
 import GeoTIFF from "ol/source/GeoTIFF"
 import WebGLTileLayer from "ol/layer/WebGLTile"
 
-let currentUrl = null
+import { buildColorRamp } from "./colormap.js"
 
-export function updateRaster(map, url, previousLayer) {
+export function updateRaster(map, url, previousLayer, render) {
 
   if (!url) return previousLayer
 
-  if (url === currentUrl) return previousLayer
-
-  currentUrl = url
-
   const source = new GeoTIFF({
-    normalize: false,
-    sources: [
-      { url: url, bands: [1] }
-    ]
+    normalize: render.rescale ? false : true,
+    interpolate: true,
+    sources: [{ url, bands: [1] }]
   })
 
-  const layer = new WebGLTileLayer({
-    source,
-    style: {
-      color: [
-        "interpolate",
-        ["linear"],
-        ["band", 1],
+  const layerOptions = { source }
 
-        0,   [0, 0, 0, 0],
-        0.1, [0, 0, 255, 1],
-        1,   [0, 255, 255, 1],
-        10,  [255, 255, 0, 1],
-        50,  [255, 165, 0, 1],
-        100, [255, 0, 0, 1]
+  if (render.rescale) {
+
+    const [min, max] = render.rescale
+
+    const ramp = buildColorRamp(render.colormap, min, max)
+
+    layerOptions.style = {
+      color: [
+        "case",
+
+        ["<", ["band",1], min],
+        [0,0,0,0],
+
+        [
+            "interpolate",
+            ["linear"],
+            ["band", 1],
+            ...ramp
+        ]
       ]
     }
-  })
+  }
+
+  const newLayer = new WebGLTileLayer(layerOptions)
 
   if (previousLayer) {
     map.removeLayer(previousLayer)
   }
 
-  map.addLayer(layer)
+  map.addLayer(newLayer)
 
-  return layer
+  return newLayer
 }

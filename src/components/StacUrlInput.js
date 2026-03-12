@@ -5,7 +5,7 @@ export function StacUrlInput(container) {
 
   const input = document.createElement("input")
   input.placeholder = "Enter STAC API URL"
-  input.value = "http://localhost:8081"
+  input.value = "http://localhost"
 
   const button = document.createElement("button")
   button.textContent = "Load"

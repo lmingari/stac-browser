@@ -9,6 +9,7 @@ import { createFootprintLayer } from "./footprintLayer"
 import { zoomToBBox } from "./zoomToBBox"
 import { drawGeometry } from "./drawGeometry"
 import { updateRaster } from "./rasterLayer"
+import { getRenderConfig } from "./renderConfig"
 
 import { resolveAssetHref } from "../api/resolveAssetHref"
 
@@ -55,7 +56,9 @@ export function MapView(container) {
 
     const url = resolveAssetHref(asset)
 
-    rasterLayer = updateRaster(map, url, rasterLayer)
+    const render = getRenderConfig(item, asset.variable)
+
+    rasterLayer = updateRaster(map, url, rasterLayer, render)
 
   }
 

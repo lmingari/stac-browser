@@ -13,11 +13,11 @@ export function resolveAssetHref(asset) {
 
   // STAC asset paths -> served by COG server
   if (href.startsWith("/")) {
-    return new URL(href, state.cogUrl).href
+    return new URL(href, state.stacUrl).href
   }
 
   // fallback
-  return new URL(href, state.cogUrl + "/").href
+  return new URL(href, state.stacUrl + "/").href
 
 }
 

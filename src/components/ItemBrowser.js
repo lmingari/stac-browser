@@ -71,19 +71,6 @@ export function ItemBrowser(container) {
 
         radiosByItemId[item.id] = radio
 
-        document.addEventListener("selectedItemChanged", () => {
-
-          const item = state.selectedItem
-          if (!item) return
-
-          const radio = radiosByItemId[item.id]
-
-          if (radio) {
-            radio.checked = true
-          }
-
-        })
-
         /* ---------- header ---------- */
 
         const header = document.createElement("div")
@@ -132,6 +119,24 @@ export function ItemBrowser(container) {
         card.appendChild(body)
 
         list.appendChild(card)
+
+      })
+
+      document.addEventListener("selectedItemChanged", () => {
+
+        const item = state.selectedItem
+        if (!item) return
+
+        const radio = radiosByItemId[item.id]
+
+        if (radio) {
+          radio.checked = true
+
+          radio.closest(".item-card").scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          })
+        }
 
       })
 

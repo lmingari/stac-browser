@@ -1,6 +1,5 @@
 export const state = {
   stacUrl: null,
-  cogUrl: "http://localhost:8083",
 
   collections: [],
   items: [],
