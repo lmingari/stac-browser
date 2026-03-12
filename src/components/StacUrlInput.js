@@ -3,6 +3,8 @@ import { setState } from "../state/store"
 
 export function StacUrlInput(container) {
 
+  container.classList.add("stac-url-input")
+
   const input = document.createElement("input")
   input.placeholder = "Enter STAC API URL"
   input.value = "http://localhost"
@@ -11,7 +13,6 @@ export function StacUrlInput(container) {
   button.textContent = "Load"
 
   const status = document.createElement("span")
-  status.style.marginLeft = "10px"
 
   container.appendChild(input)
   container.appendChild(button)
