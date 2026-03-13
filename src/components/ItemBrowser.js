@@ -17,7 +17,7 @@ export function ItemBrowser(container) {
       return
     }
 
-    list.innerHTML = "Loading items..."
+    list.innerHTML = '<div class="state-msg">Loading items…</div>'
 
     try {
 
@@ -36,7 +36,7 @@ export function ItemBrowser(container) {
       const items = result.features
 
       if (!items.length) {
-        list.innerHTML = "No items found"
+        list.innerHTML = '<div class="state-msg">No items found</div>'
         return
       }
 
@@ -143,7 +143,7 @@ export function ItemBrowser(container) {
     } catch (err) {
 
       console.error(err)
-      list.innerHTML = "Failed to load items"
+      list.innerHTML = '<div class="state-msg">Failed to load items</div>'
 
     }
 

@@ -3,48 +3,61 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>STAC Browser</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STAC Browser — COG Visualiser</title>
 </head>
 
 <body>
 
 <div id="app">
 
+  <!-- ── Left Panel ── -->
   <div class="panel browser">
 
-    <h2>STAC Browser</h2>
-
-    <div class="section">
-      <h3>STAC</h3>
-      <div id="stac-url"></div>
+    <div class="browser-header">
+      <div class="browser-wordmark">
+        <div class="browser-wordmark-icon">🛰</div>
+        <h1>STAC Browser</h1>
+      </div>
+      <div class="browser-subtitle">COG Visualiser</div>
     </div>
 
-    <div class="section">
-      <h3>Filters</h3>
-      <div id="collection"></div>
-      <div id="event"></div>
-      <div id="start-time"></div>
-    </div>
+    <div class="browser-scroll">
 
-    <div class="section">
-      <h3>Items</h3>
-      <div id="items"></div>
-    </div>
+      <div class="section">
+        <h3>Catalogue</h3>
+        <div id="stac-url"></div>
+      </div>
 
-    <div class="section">
-      <h3>Assets</h3>
-      <div id="assets"></div>
-    </div>
+      <div class="section">
+        <h3>Filters</h3>
+        <div id="collection"></div>
+        <div id="event"></div>
+        <div id="start-time"></div>
+      </div>
 
+      <div class="section">
+        <h3>Items</h3>
+        <div id="items"></div>
+      </div>
+
+      <div class="section">
+        <h3>Assets</h3>
+        <div id="assets"></div>
+      </div>
+
+    </div>
   </div>
 
+  <!-- ── Right Panel ── -->
   <div class="panel map">
     <div id="map" class="map-container"></div>
   </div>
 
+  <!-- ── Step Navigator Overlay ── -->
   <div id="step-nav" class="step-nav">
     <button class="step-prev">‹</button>
-    <span class="step-label">Step 0</span>
+    <span class="step-label">Step —</span>
     <button class="step-next">›</button>
   </div>
 

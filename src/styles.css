@@ -1,37 +1,157 @@
-/* ===============================
-   BASE LAYOUT
-================================ */
+/* ================================================
+   STAC BROWSER — Dark Theme
+   Geo / Remote Sensing Mission Control Aesthetic
+================================================ */
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  margin: 0;
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+/* ── CSS Variables ─────────────────────────────── */
+
+:root {
+  --bg-base:        #0d0f14;
+  --bg-panel:       #12151c;
+  --bg-section:     #022F2E;
+  --bg-card:        #1c2030;
+  --bg-card-hover:  #212638;
+  --bg-card-active: #1a2540;
+
+  --border:         #4a5568;
+  --border-focus:   #3a7bd5;
+  --border-accent:  #2a4a7f;
+
+  --accent:         #3a7bd5;
+  --accent-dim:     #1e3d6e;
+  --accent-glow:    rgba(58, 123, 213, 0.15);
+  --accent-text:    #6fa8ff;
+
+  --success:        #2dd4a0;
+  --success-dim:    rgba(45, 212, 160, 0.12);
+  --warning:        #f5a623;
+  --error:          #e05252;
+
+  --text-primary:   #dce4f0;
+  --text-secondary: #7a8baa;
+  --text-muted:     #4a5568;
+  --text-label:     #9aadc8;
+
+  --tag-bg:         #1a2540;
+  --tag-text:       #6fa8ff;
+
+  --panel-width:    340px;
+  --radius-sm:      4px;
+  --radius:         6px;
+  --radius-lg:      10px;
 }
+
+/* ── Reset & Base ──────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── App Layout ────────────────────────────────── */
 
 #app {
   display: flex;
   height: 100vh;
+  overflow: hidden;
 }
 
+/* ── Panel Base ────────────────────────────────── */
+
 .panel {
-  padding: 20px;
+  padding: 0;
   overflow: auto;
 }
 
-/* LEFT PANEL */
+/* ── Left Panel (Browser) ──────────────────────── */
 
 .browser {
-  width: 350px;
-  border-right: 1px solid #ddd;
-  background: #FEF3C6;
+  width: var(--panel-width);
+  min-width: var(--panel-width);
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-/* RIGHT PANEL */
+.browser-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 14px 20px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.browser-scroll::-webkit-scrollbar { width: 4px; }
+.browser-scroll::-webkit-scrollbar-track { background: transparent; }
+.browser-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ── Panel Header ──────────────────────────────── */
+
+.browser-header {
+  padding: 16px 14px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-panel);
+  flex-shrink: 0;
+}
+
+.browser-wordmark {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.browser-wordmark-icon {
+  width: 24px;
+  height: 24px;
+  background: var(--accent);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.browser-wordmark h1 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+}
+
+.browser-subtitle {
+  margin: 3px 0 0 33px;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ── Right Panel (Map) ─────────────────────────── */
 
 .map {
   flex: 1;
   display: flex;
   flex-direction: column;
   padding: 0;
+  background: var(--bg-base);
+  position: relative;
 }
 
 #map {
@@ -40,228 +160,300 @@ body {
   position: relative;
 }
 
-
-/* ===============================
-   FORM ELEMENTS
-================================ */
-
-label {
-  display: block;
-  margin-top: 15px;
-  font-size: 14px;
-}
-
-select,
-input,
-button {
-  width: 100%;
-  padding: 6px;
-  margin-top: 5px;
-  box-sizing: border-box;
-}
-
-button {
-  cursor: pointer;
-}
-
-/* ===============================
-   SECTION STAC URL
-=============================== */
-.stac-url-input {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-rows: auto auto;
-  gap: 4px 8px;
-}
-
-.stac-url-input input {
-  grid-column: 1;
-}
-
-.stac-url-input button {
-  grid-column: 2;
-  padding: 2px 8px;
-  font-size: 0.9em;
-}
-
-.stac-url-input span {
-  grid-column: 1 / span 2;
-  text-align: right;
-  font-size: 0.85em;
-  color: #666;
-}
-
-/* ===============================
-   SECTION BOX
-================================ */
+/* ── Section Box ───────────────────────────────── */
 
 .section {
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 12px;
-  margin-bottom: 15px;
+  background: var(--bg-section);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 13px;
+  margin-top: 12px;
 }
 
 .section h3 {
-  margin: 0 0 10px 0;
-  font-size: 15px;
-  text-align: center;
+  margin: 0 0 11px 0;
+  font-size: 10px;
   font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
+.section h3::before {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.7;
+}
 
-/* ===============================
-   LIST CONTAINERS
-================================ */
+/* ── Form Elements ─────────────────────────────── */
+
+label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--text-label);
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+
+label:first-child { margin-top: 14px; }
+
+select,
+input[type="text"],
+input[type="url"],
+input:not([type="radio"]) {
+  width: 100%;
+  padding: 7px 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%237a8baa' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+  cursor: pointer;
+}
+
+select:focus,
+input:not([type="radio"]):focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+select:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+select option {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+/* ── STAC URL Input ────────────────────────────── */
+
+.stac-url-input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stac-url-row {
+  display: flex;
+  gap: 6px;
+}
+
+.stac-url-row input {
+  flex: 1;
+  width: auto;
+}
+
+.stac-url-input .status {
+  font-size: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--text-secondary);
+  min-height: 14px;
+  transition: color 0.2s ease;
+}
+
+.stac-url-input .status.ok  { color: var(--success); }
+.stac-url-input .status.err { color: var(--error); }
+
+/* ── Primary Button ────────────────────────────── */
+
+.btn-primary {
+  padding: 7px 13px;
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius);
+  color: #fff;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, transform 0.1s ease;
+  flex-shrink: 0;
+}
+
+.btn-primary:hover  { background: #4a8be5; }
+.btn-primary:active { transform: scale(0.96); }
+
+/* ── List Containers ───────────────────────────── */
 
 .item-list,
 .asset-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 5px;
 }
 
 .item-list {
-  max-height: 400px;   /* adjust */
+  max-height: 380px;
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+  padding-right: 2px;
 }
 
-/* ===============================
-   CARD BASE STYLE
-================================ */
+.item-list::-webkit-scrollbar       { width: 3px; }
+.item-list::-webkit-scrollbar-thumb { background: var(--border); }
+
+/* ── Empty / Loading States ────────────────────── */
+
+.state-msg {
+  padding: 14px 8px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-style: italic;
+}
+
+/* ── Card Base ─────────────────────────────────── */
 
 .item-card,
 .asset-card {
-
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  background: #fff;
-
-  padding: 10px;
-
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  padding: 10px 12px;
   display: grid;
-  grid-template-columns: 18px 1fr;
+  grid-template-columns: 16px 1fr;
   column-gap: 10px;
-  row-gap: 6px;
-
-  font-size: 11px;
-
+  row-gap: 4px;
+  cursor: pointer;
   transition:
-    background 0.15s ease,
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
-}
-
-.asset-card {
+    background 0.12s ease,
+    border-color 0.12s ease,
+    box-shadow 0.12s ease;
   position: relative;
+  font-size: 11px;
 }
 
-.item-card {
-  grid-template-rows: auto auto;
-}
-
-
-/* ===============================
-   CARD INTERACTION
-================================ */
+.asset-card { padding-bottom: 12px; }
 
 .item-card:hover,
 .asset-card:hover {
-  border-color: #999;
-  background: #fafafa;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  background: var(--bg-card-hover);
+  border-color: var(--border-accent);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .item-card:has(input:checked),
 .asset-card:has(input:checked) {
-  background: #e8f2ff;
+  background: var(--bg-card-active);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-dim), 0 2px 10px rgba(58,123,213,0.12);
 }
 
-
-/* ===============================
-   RADIO
-================================ */
+/* ── Radio ─────────────────────────────────────── */
 
 .item-card input[type="radio"],
 .asset-card input[type="radio"] {
   grid-column: 1;
   grid-row: 1 / span 3;
+  margin: 0;
   margin-top: 3px;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 50%;
+  background: var(--bg-base);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.12s ease, background 0.12s ease;
 }
 
+.item-card input[type="radio"]:checked,
+.asset-card input[type="radio"]:checked {
+  border-color: var(--accent);
+  background: radial-gradient(circle, var(--accent) 38%, transparent 39%);
+}
 
-/* ===============================
-   CARD CONTENT
-================================ */
+/* ── Card Content ──────────────────────────────── */
 
 .item-header,
 .asset-header {
   grid-column: 2;
-
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  gap: 8px;
 }
 
 .item-body,
 .asset-body {
   grid-column: 2;
-  font-size: 10px;
   display: flex;
   flex-direction: column;
   gap: 2px;
+  line-height: 1.5;
 }
 
-
-/* ===============================
-   TEXT STYLES
-================================ */
+/* ── Text Styles ───────────────────────────────── */
 
 .item-valid,
 .asset-title {
-  font-weight: 600;
+  font-weight: 500;
+  font-size: 11.5px;
+  color: var(--text-primary);
+  line-height: 1.25;
 }
 
 .item-step,
 .asset-step {
-  color: #666;
-  background: #f0f0f0;
-  padding: 2px 6px;
-  border-radius: 4px;
+  color: var(--tag-text);
+  background: var(--tag-bg);
+  border: 1px solid var(--border-accent);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 500;
   white-space: nowrap;
-}
-
-.item-header {
-  gap: 10px;
+  flex-shrink: 0;
 }
 
 .item-id {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--text-muted);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9.5px;
 }
 
 .item-created,
-.item-id,
-.asset-time,
-.asset-unit {
-  color: #777;
+.asset-time {
+  color: var(--text-muted);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9.5px;
 }
 
-.asset-label {
-  color: #444;
-}
+.asset-label { color: var(--text-secondary); }
+.asset-unit  { color: var(--text-muted); font-family: 'IBM Plex Mono', monospace; }
 
-.asset-meta {
-  display: flex;
-  flex-direction: column;
-}
-
-
-/* ===============================
-   ASSET DOWNLOAD BUTTON
-================================ */
+/* ── Download Button ───────────────────────────── */
 
 .asset-card .btn-download {
   position: absolute;
@@ -269,114 +461,116 @@ button {
   bottom: 10px;
 }
 
-/* ===============================
-   ICON BUTTONS
-================================ */
-
 .btn,
 .btn-download {
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  width: 28px;
-  height: 28px;
-
+  width: 26px;
+  height: 26px;
   padding: 0;
   margin: 0;
-
-  border: 1px solid #c8e6c9;
-  border-radius: 4px;
-
-  background: #e8f5e9;
-
-  color: #2e7d32;   /* icon color */
-
-  font-size: 14px;
-  line-height: 1;
-
-  box-sizing: border-box;
-
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-base);
+  color: var(--text-secondary);
+  font-size: 12px;
   cursor: pointer;
   text-decoration: none;
-
-  transition:
-    background 0.15s ease,
-    border-color 0.15s ease,
-    color 0.15s ease;
+  transition: all 0.12s ease;
 }
 
+.btn:hover,
 .btn-download:hover {
-
-  background: #c8e6c9;
-  border-color: #81c784;
-
-  color: #1b5e20;
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  color: var(--accent-text);
 }
 
-.btn-download:visited {
-  color: #2e7d32;
-}
+.btn-download:visited { color: var(--text-secondary); }
 
-/* ===============================
-   STEP NAVIGATION (MAP OVERLAY)
-================================ */
+/* ── Step Navigator (Map Overlay) ──────────────── */
 
 .step-nav {
-
   position: absolute;
-  top: 10px;
-  right: 10px;
-
+  top: 14px;
+  right: 14px;
   display: flex;
   align-items: center;
-  gap: 8px;
-
-  background: rgba(255,255,255,0.95);
-  border: 1px solid #ddd;
-  border-radius: 6px;
-
+  gap: 6px;
+  background: rgba(18, 21, 28, 0.9);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 6px 8px;
-
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-
+  box-shadow: 0 4px 16px rgba(0,0,0,0.45);
+  backdrop-filter: blur(10px);
   z-index: 10;
 }
 
 .step-nav button {
-
-  width: 28px;
-  height: 28px;
-
-  border: 1px solid #ccc;
-  border-radius: 4px;
-
-  background: white;
-
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
-
-  font-size: 16px;
-  font-weight: bold;
-
+  font-size: 15px;
   cursor: pointer;
+  padding: 0;
+  transition: all 0.12s ease;
 }
 
 .step-nav button:hover {
-  background: #f2f2f2;
+  background: var(--bg-card-hover);
+  border-color: var(--border-focus);
+  color: var(--accent-text);
 }
 
-.step-nav button:active {
-  background: #e6e6e6;
-}
+.step-nav button:active { transform: scale(0.92); }
 
 .step-label {
-
-  min-width: 70px;
+  min-width: 68px;
   text-align: center;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
-  color: #333;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--text-label);
+  letter-spacing: 0.04em;
+}
+
+/* ── OpenLayers overrides ──────────────────────── */
+
+.ol-attribution {
+  font-size: 9px !important;
+  background: rgba(18, 21, 28, 0.75) !important;
+  color: var(--text-muted) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+.ol-attribution a { color: var(--text-secondary) !important; }
+
+.ol-zoom {
+  top: auto !important;
+  bottom: 14px !important;
+  left: 14px !important;
+}
+
+.ol-zoom .ol-zoom-in,
+.ol-zoom .ol-zoom-out {
+  background: rgba(18, 21, 28, 0.9) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-primary) !important;
+  font-size: 18px !important;
+  font-weight: 300 !important;
+  backdrop-filter: blur(8px) !important;
+  transition: background 0.12s ease, border-color 0.12s ease !important;
+}
+
+.ol-zoom .ol-zoom-in:hover,
+.ol-zoom .ol-zoom-out:hover {
+  background: var(--bg-card-hover) !important;
+  border-color: var(--border-focus) !important;
 }
