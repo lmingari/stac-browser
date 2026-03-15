@@ -85,7 +85,8 @@ html, body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-}
+  transition: width 0.25s ease, min-width 0.25s ease;
+ }
 
 .browser-scroll {
   flex: 1;
@@ -98,6 +99,43 @@ html, body {
 .browser-scroll::-webkit-scrollbar { width: 4px; }
 .browser-scroll::-webkit-scrollbar-track { background: transparent; }
 .browser-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ── Left Panel toggle ──────────────────────── */
+
+.panel-toggle {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  left: var(--panel-width);
+  transition: left 0.25s ease;
+  z-index: 100;
+  width: 16px;
+  height: 40px;
+  background: var(--bg-section);
+  border: 1px solid var(--border);
+  border-left: none;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 0;
+  transition: left 0.25s ease, background 0.12s ease, color 0.12s ease;
+}
+
+.panel-toggle:hover {
+  background: var(--bg-card-hover);
+  color: var(--accent-text);
+}
+
+.browser.collapsed {
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.browser.collapsed ~ .panel-toggle {
+  left: 0;
+}
 
 /* ── Panel Header ──────────────────────────────── */
 

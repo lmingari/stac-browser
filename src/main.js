@@ -11,6 +11,8 @@ import { AssetList } from "./components/AssetList"
 import { MapView } from "./map/MapView"
 import { StepNavigator } from "./components/StepNavigator"
 
+import { PanelToggle } from "./components/PanelToggle"
+
 StacUrlInput(document.getElementById("stac-url"))
 CollectionSelector(document.getElementById("collection"))
 EventSelector(document.getElementById("event"))
@@ -20,3 +22,6 @@ AssetList(document.getElementById("assets"))
 
 MapView(document.getElementById("map"))
 StepNavigator(document.getElementById("step-nav"))
+
+PanelToggle(document.querySelector(".browser"))
+
