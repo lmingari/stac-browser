@@ -1,10 +1,10 @@
 import { state, setState } from "../state/store"
 import { searchItems } from "../api/stacClient"
 
-export function EventSelector(container) {
+export function SimulationSelector(container) {
 
   const label = document.createElement("label")
-  label.textContent = "Event"
+  label.textContent = "Simulation"
 
   const select = document.createElement("select")
   select.disabled = true
@@ -13,20 +13,20 @@ export function EventSelector(container) {
   container.appendChild(select)
 
   select.addEventListener("change", (e) => {
-    setState("selectedEvent", e.target.value)
+    setState("selectedSimulation", e.target.value)
   })
 
   document.addEventListener("selectedCollectionChanged", async () => {
 
     if (!state.selectedCollection) {
-      select.innerHTML = `<option>Select event</option>`
+      select.innerHTML = `<option>Select simulation</option>`
       select.disabled = true
       return
     }
 
     // reset UI
     select.disabled = true
-    select.innerHTML = `<option>Loading events...</option>`
+    select.innerHTML = `<option>Loading simulations...</option>`
 
     try {
 
@@ -35,13 +35,13 @@ export function EventSelector(container) {
         limit: 100
       })
 
-      const events = [...new Set(
-        result.features.map(f => f.properties["event:name"])
+      const simulations = [...new Set(
+        result.features.map(f => f.properties["simulation"])
       )]
 
       select.innerHTML = `
-        <option value="">Select event</option>
-        ${events.map(e => `<option value="${e}">${e}</option>`).join("")}
+        <option value="">Select simulation</option>
+        ${simulations.map(e => `<option value="${e}">${e}</option>`).join("")}
       `
 
       select.value = ""
@@ -51,7 +51,7 @@ export function EventSelector(container) {
 
       console.error(err)
 
-      select.innerHTML = `<option>Failed to load events</option>`
+      select.innerHTML = `<option>Failed to load simulationss</option>`
       select.disabled = true
 
     }

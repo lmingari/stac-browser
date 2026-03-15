@@ -3,7 +3,7 @@ import "./styles.css"
 
 import { StacUrlInput } from "./components/StacUrlInput"
 import { CollectionSelector } from "./components/CollectionSelector"
-import { EventSelector } from "./components/EventSelector"
+import { SimulationSelector } from "./components/SimulationSelector"
 import { StartTimeSelector } from "./components/StartTimeSelector"
 import { ItemBrowser } from "./components/ItemBrowser"
 import { AssetList } from "./components/AssetList"
@@ -15,7 +15,7 @@ import { PanelToggle } from "./components/PanelToggle"
 
 StacUrlInput(document.getElementById("stac-url"))
 CollectionSelector(document.getElementById("collection"))
-EventSelector(document.getElementById("event"))
+SimulationSelector(document.getElementById("simulation"))
 StartTimeSelector(document.getElementById("start-time"))
 ItemBrowser(document.getElementById("items"))
 AssetList(document.getElementById("assets"))

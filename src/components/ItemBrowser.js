@@ -26,7 +26,7 @@ export function ItemBrowser(container) {
         collections: [state.selectedCollection],
 
         query: {
-          "event:name": { eq: state.selectedEvent },
+          "simulation": { eq: state.selectedSimulation },
           "forecast:start_time": { eq: state.selectedStartTime }
         },
 

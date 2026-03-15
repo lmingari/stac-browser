@@ -16,9 +16,9 @@ export function StartTimeSelector(container) {
     setState("selectedStartTime", e.target.value)
   })
 
-  document.addEventListener("selectedEventChanged", async () => {
+  document.addEventListener("selectedSimulationChanged", async () => {
 
-    if (!state.selectedEvent) {
+    if (!state.selectedSimulation) {
       select.innerHTML = `<option>Select start time</option>`
       select.disabled = true
       return
@@ -33,7 +33,7 @@ export function StartTimeSelector(container) {
       const result = await searchItems(state.stacUrl, {
         collections: [state.selectedCollection],
         query: {
-          "event:name": { eq: state.selectedEvent }
+          "simulation": { eq: state.selectedSimulation }
         },
         limit: 100
       })

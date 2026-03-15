@@ -5,7 +5,7 @@ export const state = {
   items: [],
 
   selectedCollection: null,
-  selectedEvent: null,
+  selectedSimulation: null,
   selectedStartTime: null,
   selectedItem: null,
   selectedAsset: null
@@ -14,8 +14,8 @@ export const state = {
 const DEBUG = true
 
 const dependencies = {
-  selectedCollection: ["selectedEvent", "selectedStartTime", "selectedItem", "selectedAsset"],
-  selectedEvent: ["selectedStartTime", "selectedItem", "selectedAsset"],
+  selectedCollection: ["selectedSimulation", "selectedStartTime", "selectedItem", "selectedAsset"],
+  selectedSimulation: ["selectedStartTime", "selectedItem", "selectedAsset"],
   selectedStartTime: ["selectedItem", "selectedAsset"],
   selectedItem: ["selectedAsset"]
 }
