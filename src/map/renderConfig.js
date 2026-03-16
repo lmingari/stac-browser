@@ -4,7 +4,7 @@ const DEFAULT_RENDER = {
   resampling: "nearest"
 }
 
-export function getRenderConfig(item, variable) {
+export function getRenderConfig(item, variable, log = false) {
 
   const render = item.properties?.renders?.[variable]
 
@@ -15,6 +15,7 @@ export function getRenderConfig(item, variable) {
   return {
     colormap: render.colormap_name || DEFAULT_RENDER.colormap,
     rescale: render.rescale?.[0] || DEFAULT_RENDER.rescale,
-    resampling: render.resampling || DEFAULT_RENDER.resampling
+    resampling: render.resampling || DEFAULT_RENDER.resampling, 
+    log
   }
 }

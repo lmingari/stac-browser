@@ -12,6 +12,8 @@ export const selectedStartTime  = signal(null)
 export const selectedItem       = signal(null)
 export const selectedAsset      = signal(null)
 
+export const logScale           = signal(false)
+
 // ── Cascade resets ─────────────────────────────────────────────────────────
 // When a parent changes, reset all downstream selections.
 

@@ -4,7 +4,7 @@ import Map from "ol/Map"
 import View from "ol/View"
 import { fromLonLat } from "ol/proj"
 
-import { selectedItem, selectedAsset } from "../signals/store"
+import { selectedItem, selectedAsset, logScale } from "../signals/store"
 import { createBaseLayer } from "./baseLayer"
 import { createFootprintLayer } from "./footprintLayer"
 import { zoomToBBox } from "./zoomToBBox"
@@ -47,7 +47,7 @@ export function MapView() {
       }
 
       const url    = resolveAssetHref(asset)
-      const render = getRenderConfig(item, asset.variable)
+      const render = getRenderConfig(item, asset.variable, logScale.value)
       rasterLayer  = updateRaster(map, url, rasterLayer, render)
     })
 

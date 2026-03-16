@@ -529,20 +529,28 @@ select option {
 
 /* ── Step Navigator (Map Overlay) ──────────────── */
 
+/* ── Step Navigator (Map Overlay) ──────────────── */
+
 .step-nav {
-  position: absolute;
+  position: fixed;
   top: 14px;
   right: 14px;
+  z-index: 100;
   display: flex;
-  align-items: center;
-  gap: 6px;
+  flex-direction: column;
   background: rgba(18, 21, 28, 0.9);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 6px 8px;
   box-shadow: 0 4px 16px rgba(0,0,0,0.45);
   backdrop-filter: blur(10px);
-  z-index: 10;
+  overflow: hidden;
+}
+
+.step-nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
 }
 
 .step-nav button {
@@ -577,6 +585,27 @@ select option {
   font-family: 'IBM Plex Mono', monospace;
   color: var(--text-label);
   letter-spacing: 0.04em;
+}
+
+.step-nav-log {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--text-label);
+  cursor: pointer;
+}
+
+.step-nav-log input[type="checkbox"] {
+  appearance: auto;
+  -webkit-appearance: auto;
+  width: 13px;
+  height: 13px;
+  cursor: pointer;
+  accent-color: var(--accent);
 }
 
 /* ── OpenLayers overrides ──────────────────────── */

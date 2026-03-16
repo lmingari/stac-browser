@@ -232,14 +232,18 @@ export function listColormaps() {
  * @param {number}  steps  Number of steps (default 16)
  * @returns {Array}
  */
-export function buildColorRamp(name, min, max, steps = 16) {
-
+export function buildColorRamp(name, min, max, steps = 16, log = false) {
   const colors = getColormap(name ?? "viridis", steps, 0.75)
   const ramp = []
 
+  const logMin = Math.log(Math.max(min, 1e-10))
+  const logMax = Math.log(Math.max(max, 1e-10))
+
   for (let i = 0; i < colors.length; i++) {
     const t = i / (colors.length - 1)
-    const value = min + t * (max - min)
+    const value = log
+      ? Math.exp(logMin + t * (logMax - logMin))
+      : min + t * (max - min)
     ramp.push(value)
     ramp.push(colors[i])
   }
