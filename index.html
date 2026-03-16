@@ -1,72 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
   <title>STAC Browser — COG Visualiser</title>
 </head>
-
 <body>
-
-<div id="app">
-
-  <!-- ── Left Panel ── -->
-  <div class="panel browser">
-
-    <div class="browser-header">
-      <div class="browser-wordmark">
-        <div class="browser-wordmark-icon">
-        <i class="fa-solid fa-map-location"></i>
-        </div>
-        <h1>STAC Browser</h1>
-      </div>
-      <div class="browser-subtitle">COG Visualiser</div>
-    </div>
-
-    <div class="browser-scroll">
-
-      <div class="section">
-        <h3>Catalogue</h3>
-        <div id="stac-url"></div>
-      </div>
-
-      <div class="section">
-        <h3>Filters</h3>
-        <div id="collection"></div>
-        <div id="simulation"></div>
-        <div id="start-time"></div>
-      </div>
-
-      <div class="section">
-        <h3>Items</h3>
-        <div id="items"></div>
-      </div>
-
-      <div class="section">
-        <h3>Assets</h3>
-        <div id="assets"></div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ── Right Panel ── -->
-  <div class="panel map">
-    <div id="map" class="map-container"></div>
-  </div>
-
-  <!-- ── Step Navigator Overlay ── -->
-  <div id="step-nav" class="step-nav">
-    <button class="step-prev">‹</button>
-    <span class="step-label">Step —</span>
-    <button class="step-next">›</button>
-  </div>
-
-</div>
-
-<script type="module" src="/src/main.js"></script>
-
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
