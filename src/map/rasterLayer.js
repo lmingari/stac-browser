@@ -19,7 +19,7 @@ export function updateRaster(map, url, previousLayer, render) {
 
     const [min, max] = render.rescale
 
-    const ramp = buildColorRamp(render.colormap, min, max)
+    const ramp = buildColorRamp(render.colormap, min, max, 16, render.log)
 
     layerOptions.style = {
       color: [
