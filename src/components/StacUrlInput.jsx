@@ -1,16 +1,17 @@
 import { useSignal } from "@preact/signals"
 import { getCollections } from "../api/stacClient"
+import { normalizeUrl } from "../api/resolveUrl"
 import { stacUrl, collections, selectedCollection, selectedSimulation, selectedStartTime, selectedItem, selectedAsset } from "../signals/store"
 import { batch } from "@preact/signals"
 
 export function StacUrlInput() {
 
-  const inputVal = useSignal("http://localhost")
+  const inputVal = useSignal("https://fall3d-forecast.geo3bcn.csic.es")
   const status   = useSignal(null)  // null | { ok: bool, msg: string }
   const loading  = useSignal(false)
 
   async function load() {
-    const url = inputVal.value.trim()
+    const url = normalizeUrl(inputVal.value)
     if (!url) return
 
     loading.value = true

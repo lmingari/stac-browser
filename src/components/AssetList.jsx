@@ -1,5 +1,5 @@
-import { selectedItem, selectedAsset } from "../signals/store"
-import { resolveAssetHref } from "../api/resolveAssetHref"
+import { stacUrl, selectedItem, selectedAsset } from "../signals/store"
+import { resolveAssetHref } from "../api/resolveUrl"
 
 export function AssetList() {
 
@@ -23,7 +23,7 @@ export function AssetList() {
 function AssetCard({ assetKey, asset }) {
 
   const isSelected = selectedAsset.value?.variable === asset.variable
-  const assetUrl   = resolveAssetHref(asset)
+  const assetUrl   = resolveAssetHref(stacUrl.value, asset)
 
   return (
     <label class="asset-card">

@@ -4,14 +4,14 @@ import Map from "ol/Map"
 import View from "ol/View"
 import { fromLonLat } from "ol/proj"
 
-import { selectedItem, selectedAsset, logScale } from "../signals/store"
+import { stacUrl, selectedItem, selectedAsset, logScale } from "../signals/store"
 import { createBaseLayer } from "./baseLayer"
 import { createFootprintLayer } from "./footprintLayer"
 import { zoomToBBox } from "./zoomToBBox"
 import { drawGeometry } from "./drawGeometry"
 import { updateRaster } from "./rasterLayer"
 import { getRenderConfig } from "./renderConfig"
-import { resolveAssetHref } from "../api/resolveAssetHref"
+import { resolveAssetHref } from "../api/resolveUrl"
 
 export function MapView() {
 
@@ -46,7 +46,7 @@ export function MapView() {
         currentItemId = item.id
       }
 
-      const url    = resolveAssetHref(asset)
+      const url    = resolveAssetHref(stacUrl.value,asset)
       const render = getRenderConfig(item, asset.variable, logScale.value)
       rasterLayer  = updateRaster(map, url, rasterLayer, render)
     })
