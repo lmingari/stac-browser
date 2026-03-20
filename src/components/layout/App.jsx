@@ -1,15 +1,15 @@
 import { useRef } from "preact/hooks"
 
-import { StacUrlInput }       from "./StacUrlInput"
-import { CollectionSelector } from "./CollectionSelector"
-import { SimulationSelector } from "./SimulationSelector"
-import { StartTimeSelector }  from "./StartTimeSelector"
-import { ItemBrowser }        from "./ItemBrowser"
-import { AssetList }          from "./AssetList"
+import { StacUrlInput }       from "../catalogue/StacUrlInput"
+import { CollectionSelector } from "../filters/CollectionSelector"
+import { SimulationSelector } from "../filters/SimulationSelector"
+import { StartTimeSelector }  from "../filters/StartTimeSelector"
+import { ItemBrowser }        from "../items/ItemBrowser"
+import { AssetList }          from "../assets/AssetList"
 import { PanelToggle }        from "./PanelToggle"
 import { StepNavigator }      from "./StepNavigator"
 import { MapView }            from "../map/MapView"
-import { selectedItem }       from "../signals/store"
+import { selectedItem }       from "../../signals/store"
 
 export function App() {
 

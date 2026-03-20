@@ -1,0 +1,26 @@
+.stac-url-input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stac-url-row {
+  display: flex;
+  gap: 6px;
+}
+
+.stac-url-row input {
+  flex: 1;
+  width: auto;
+}
+
+.stac-url-input .status {
+  font-size: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--text-secondary);
+  min-height: 14px;
+  transition: color 0.2s ease;
+}
+
+.stac-url-input .status.ok  { color: var(--success); }
+.stac-url-input .status.err { color: var(--error); }

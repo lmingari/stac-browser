@@ -1,7 +1,7 @@
 import { useSignal, useSignalEffect } from "@preact/signals"
 import { useRef, useEffect } from "preact/hooks"
-import { selectedCollection, selectedSimulation, selectedStartTime, selectedItem, items, itemGroups, stacUrl } from "../signals/store"
-import { searchItems, normalizeAssets } from "../api/stacClient"
+import { selectedCollection, selectedSimulation, selectedStartTime, selectedItem, items, itemGroups, stacUrl } from "../../signals/store"
+import { searchItems, normalizeAssets } from "../../api/stacClient"
 
 export function ItemBrowser() {
 
@@ -53,7 +53,6 @@ export function ItemBrowser() {
 
   const groups = itemGroups.value
 
-  // If only one group, skip tabs and show flat list
   if (groups.length === 1) {
     return <ItemList items={groups[0].items} />
   }
@@ -63,8 +62,6 @@ export function ItemBrowser() {
 
 function TabbedItemBrowser({ groups }) {
   const activeGroup = useSignal(groups[0]?.keyword ?? null)
-
-  // Keep active tab valid if groups change
   const active = groups.find(g => g.keyword === activeGroup.value) ?? groups[0]
 
   return (
@@ -98,7 +95,9 @@ function ItemList({ items: listItems }) {
 
 function ItemRow({ item }) {
   const isSelected = selectedItem.value?.id === item.id
-  const rowRef = useRef(null)
+  const step       = item.properties["forecast:step"]
+  const validTime  = item.properties["forecast:valid_time"]
+  const rowRef     = useRef(null)
 
   useEffect(() => {
     if (isSelected && rowRef.current) {
@@ -106,10 +105,6 @@ function ItemRow({ item }) {
     }
   }, [isSelected])
 
-  const step       = item.properties["forecast:step"]
-  const validTime  = item.properties["forecast:valid_time"]
-
-  // Format valid time to be compact: "2024-01-15 06:00" instead of full ISO
   const label = validTime
     ? validTime.replace("T", " ").replace(/:00\.000Z$/, "").replace("Z", "")
     : item.id
@@ -127,4 +122,3 @@ function ItemRow({ item }) {
     </label>
   )
 }
-

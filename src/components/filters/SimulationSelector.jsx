@@ -1,6 +1,6 @@
-import { selectedCollection, selectedSimulation, stacUrl } from "../signals/store"
-import { searchItems } from "../api/stacClient"
-import { useFetchOptions } from "../hooks/useFetchOptions"
+import { selectedCollection, selectedSimulation, stacUrl } from "../../signals/store"
+import { searchItems } from "../../api/stacClient"
+import { useFetchOptions } from "../../hooks/useFetchOptions"
 
 export function SimulationSelector() {
   const { options, loading, error } = useFetchOptions((signal) => {
