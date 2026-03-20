@@ -1,6 +1,5 @@
 import { useSignal, batch } from "@preact/signals"
-import { getCollections } from "../../api/stacClient"
-import { normalizeUrl } from "../../api/resolveUrl"
+import { getCollections, normalizeUrl } from "../../api"
 import { stacUrl, collections, selectedCollection } from "../../signals/store"
 
 export function StacUrlInput() {

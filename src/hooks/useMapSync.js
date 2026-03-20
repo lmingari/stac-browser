@@ -4,7 +4,7 @@ import { zoomToBBox }      from "../map/zoomToBBox"
 import { drawGeometry }    from "../map/drawGeometry"
 import { updateRaster }    from "../map/rasterLayer"
 import { getRenderConfig } from "../map/renderConfig"
-import { resolveAssetHref } from "../api/resolveUrl"
+import { resolveAssetHref } from "../api"
 
 /**
  * Binds the OpenLayers map instance to the global signals.

@@ -1,5 +1,5 @@
 import { stacUrl, selectedItem, selectedAsset } from "../../signals/store"
-import { resolveAssetHref } from "../../api/resolveUrl"
+import { resolveAssetHref } from "../../api"
 
 export function AssetList() {
 

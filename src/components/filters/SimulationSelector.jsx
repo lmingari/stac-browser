@@ -1,6 +1,7 @@
 import { selectedCollection, selectedSimulation, stacUrl } from "../../signals/store"
-import { searchItems } from "../../api/stacClient"
-import { useFetchOptions } from "../../hooks/useFetchOptions"
+import { searchItems } from "../../api"
+import { useFetchOptions } from "../../hooks"
+import { BaseSelector } from "./BaseSelector"
 
 export function SimulationSelector() {
   const { options, loading, error } = useFetchOptions((signal) => {
@@ -15,23 +16,16 @@ export function SimulationSelector() {
     )
   })
 
-  const disabled = !selectedCollection.value || loading.value
-
   return (
-    <div>
-      <label>Simulation</label>
-      <select
-        value={selectedSimulation.value ?? ""}
-        onChange={e => selectedSimulation.value = e.target.value || null}
-        disabled={disabled}
-      >
-        <option value="">
-          {loading.value ? "Loading…" : error.value ? "Failed to load" : "Select simulation"}
-        </option>
-        {options.value.map(s => (
-          <option key={s} value={s}>{s}</option>
-        ))}
-      </select>
-    </div>
+    <BaseSelector
+      label="Simulation"
+      placeholder="Select simulation"
+      value={selectedSimulation.value}
+      onChange={v => selectedSimulation.value = v}
+      disabled={!selectedCollection.value || loading.value}
+      loading={loading.value}
+      error={error.value}
+      options={options.value}
+    />
   )
 }

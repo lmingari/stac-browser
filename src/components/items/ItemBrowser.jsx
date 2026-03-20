@@ -1,7 +1,7 @@
 import { useSignal, useSignalEffect } from "@preact/signals"
 import { useRef, useEffect } from "preact/hooks"
 import { selectedCollection, selectedSimulation, selectedStartTime, selectedItem, items, itemGroups, stacUrl } from "../../signals/store"
-import { searchItems, normalizeAssets } from "../../api/stacClient"
+import { searchItems, normalizeAssets } from "../../api"
 
 export function ItemBrowser() {
 
@@ -118,7 +118,7 @@ function ItemRow({ item }) {
         onChange={() => selectedItem.value = item}
       />
       <span class="item-row-label">{label}</span>
-      {step != null && <span class="item-row-step">{step}</span>}
+      {step != null && <span class="item-row-step">+{step}</span>}
     </label>
   )
 }
