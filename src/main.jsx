@@ -1,5 +1,6 @@
 import "ol/ol.css"
 import "./styles/base.css"
+import "./styles/filters.css"
 import "./styles/catalogue.css"
 import "./styles/items.css"
 import "./styles/assets.css"

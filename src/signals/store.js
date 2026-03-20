@@ -11,6 +11,7 @@ export const selectedSimulation = signal(null)
 export const selectedStartTime  = signal(null)
 export const selectedItem       = signal(null)
 export const selectedAsset      = signal(null)
+export const selectedKeyword    = signal(null)
 
 export const logScale           = signal(false)
 
@@ -41,6 +42,7 @@ effect(() => {
   batch(() => {
     selectedItem.value  = null
     selectedAsset.value = null
+    selectedKeyword.value = null
   })
 })
 
@@ -61,26 +63,25 @@ effect(() => {
 
 // ── Computed ───────────────────────────────────────────────────────────────
 
-export const itemGroups = computed(() => {
-  return groupByKeywords(items.value)
+export const filteredItems = computed(() => {
+  const key = selectedKeyword.value
+  if (!key) return items.value
+  return items.value.filter(i =>
+    (i.properties["keywords"] ?? []).join("/") === key
+  )
 })
 
-// ── Helpers ────────────────────────────────────────────────────────────────
-
-function groupByKeywords(allItems) {
-  const map = new Map()
-
-  allItems.forEach(item => {
-    const keywords = item.properties["keywords"]
-    const keys = (Array.isArray(keywords) && keywords.length)
-      ? keywords
-      : ["Other"]
-
-    keys.forEach(key => {
-      if (!map.has(key)) map.set(key, [])
-      map.get(key).push(item)
-    })
+export const itemKeywords = computed(() => {
+  const seen = new Set()
+  const groups = []
+  items.value.forEach(i => {
+    const kw = i.properties["keywords"]
+    if (!Array.isArray(kw) || !kw.length) return
+    const key = kw.join("/")
+    if (!seen.has(key)) {
+      seen.add(key)
+      groups.push({ key, keywords: kw })
+    }
   })
-
-  return Array.from(map.entries()).map(([keyword, items]) => ({ keyword, items }))
-}
+  return groups
+})

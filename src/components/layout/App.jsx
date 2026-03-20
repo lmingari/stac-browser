@@ -1,6 +1,6 @@
 import { useRef } from "preact/hooks"
 
-import { CollectionSelector, SimulationSelector, StartTimeSelector } from "../filters"
+import { CollectionSelector, SimulationSelector, StartTimeSelector, KeywordFilter } from "../filters"
 import { MapView, ColorBarVertical }  from "../map"
 import { PanelToggle, StepNavigator } from "../layout"
 import { StacUrlInput }       from "../catalogue/StacUrlInput"
@@ -33,6 +33,7 @@ export function App() {
             <CollectionSelector />
             <SimulationSelector />
             <StartTimeSelector />
+            <KeywordFilter />
           </div>
         </div>
 

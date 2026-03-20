@@ -1,6 +1,6 @@
 import { useSignal, useSignalEffect } from "@preact/signals"
 import { useRef, useEffect } from "preact/hooks"
-import { selectedCollection, selectedSimulation, selectedStartTime, selectedItem, items, itemGroups, stacUrl } from "../../signals/store"
+import { selectedCollection, selectedSimulation, selectedStartTime, selectedItem, items, filteredItems, stacUrl } from "../../signals/store"
 import { searchItems, normalizeAssets } from "../../api"
 
 export function ItemBrowser() {
@@ -51,36 +51,7 @@ export function ItemBrowser() {
   if (error.value)   return <div class="state-msg">Failed to load items</div>
   if (!items.value.length) return null
 
-  const groups = itemGroups.value
-
-  if (groups.length === 1) {
-    return <ItemList items={groups[0].items} />
-  }
-
-  return <TabbedItemBrowser groups={groups} />
-}
-
-function TabbedItemBrowser({ groups }) {
-  const activeGroup = useSignal(groups[0]?.keyword ?? null)
-  const active = groups.find(g => g.keyword === activeGroup.value) ?? groups[0]
-
-  return (
-    <div class="item-browser">
-      <div class="item-tabs">
-        {groups.map(({ keyword, items: groupItems }) => (
-          <button
-            key={keyword}
-            class={`item-tab ${activeGroup.value === keyword ? "active" : ""}`}
-            onClick={() => activeGroup.value = keyword}
-          >
-            {keyword}
-            <span class="item-tab-count">{groupItems.length}</span>
-          </button>
-        ))}
-      </div>
-      {active && <ItemList items={active.items} />}
-    </div>
-  )
+  return <ItemList items={filteredItems.value} />
 }
 
 function ItemList({ items: listItems }) {
