@@ -1,8 +1,8 @@
 import { useSignal } from "@preact/signals"
+import { batch } from "@preact/signals"
 import { getCollections } from "../api/stacClient"
 import { normalizeUrl } from "../api/resolveUrl"
-import { stacUrl, collections, selectedCollection, selectedSimulation, selectedStartTime, selectedItem, selectedAsset } from "../signals/store"
-import { batch } from "@preact/signals"
+import { stacUrl, collections, selectedCollection } from "../signals/store"
 
 export function StacUrlInput() {
 
@@ -20,9 +20,9 @@ export function StacUrlInput() {
     try {
       const result = await getCollections(url)
       batch(() => {
-        stacUrl.value     = url
-        collections.value = result
-        selectedCollection.value = null
+        stacUrl.value            = url
+        collections.value        = result
+        selectedCollection.value = null  // cascade in store resets all downstream
       })
       status.value = { ok: true, msg: `✓ ${result.length} collection${result.length !== 1 ? "s" : ""} loaded` }
     } catch (err) {

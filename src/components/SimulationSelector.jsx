@@ -1,39 +1,18 @@
-import { useSignal, useSignalEffect } from "@preact/signals"
 import { selectedCollection, selectedSimulation, stacUrl } from "../signals/store"
 import { searchItems } from "../api/stacClient"
+import { useFetchOptions } from "../hooks/useFetchOptions"
 
 export function SimulationSelector() {
-
-  const options = useSignal([])
-  const loading = useSignal(false)
-  const error   = useSignal(false)
-
-  useSignalEffect(() => {
+  const { options, loading, error } = useFetchOptions((signal) => {
     const collection = selectedCollection.value
+    if (!collection) return null
 
-    options.value = []
-    error.value   = false
-
-    if (!collection) return
-
-    loading.value = true
-
-    searchItems(stacUrl.value, {
+    return searchItems(stacUrl.value, {
       collections: [collection],
       limit: 100
-    })
-      .then(result => {
-        options.value = [...new Set(
-          result.features.map(f => f.properties["simulation"]).filter(Boolean)
-        )]
-      })
-      .catch(err => {
-        console.error(err)
-        error.value = true
-      })
-      .finally(() => {
-        loading.value = false
-      })
+    }, signal).then(result =>
+      [...new Set(result.features.map(f => f.properties["simulation"]).filter(Boolean))]
+    )
   })
 
   const disabled = !selectedCollection.value || loading.value

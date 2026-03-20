@@ -1,0 +1,44 @@
+/* ================================================
+   STAC BROWSER — Map
+   Map panel and OpenLayers overrides
+================================================ */
+
+#map {
+  flex: 1;
+  width: 100%;
+  position: relative;
+}
+
+/* ── OpenLayers overrides ──────────────────────── */
+
+.ol-attribution {
+  font-size: 9px !important;
+  background: rgba(18, 21, 28, 0.75) !important;
+  color: var(--text-muted) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+.ol-attribution a { color: var(--text-secondary) !important; }
+
+.ol-zoom {
+  top: auto !important;
+  bottom: 14px !important;
+  left: 14px !important;
+}
+
+.ol-zoom .ol-zoom-in,
+.ol-zoom .ol-zoom-out {
+  background: rgba(18, 21, 28, 0.9) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-primary) !important;
+  font-size: 18px !important;
+  font-weight: 300 !important;
+  backdrop-filter: blur(8px) !important;
+  transition: background 0.12s ease, border-color 0.12s ease !important;
+}
+
+.ol-zoom .ol-zoom-in:hover,
+.ol-zoom .ol-zoom-out:hover {
+  background: var(--bg-card-hover) !important;
+  border-color: var(--border-focus) !important;
+}

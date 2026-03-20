@@ -1,7 +1,6 @@
 import { useSignal, useSignalEffect } from "@preact/signals"
-import { batch } from "@preact/signals"
-import { selectedCollection, selectedSimulation, selectedStartTime, selectedItem, selectedAsset, items, itemGroups, stacUrl } from "../signals/store"
-import { searchItems } from "../api/stacClient"
+import { selectedCollection, selectedSimulation, selectedStartTime, selectedItem, items, itemGroups, stacUrl } from "../signals/store"
+import { searchItems, normalizeAssets } from "../api/stacClient"
 
 export function ItemBrowser() {
 
@@ -18,6 +17,7 @@ export function ItemBrowser() {
 
     if (!startTime || !collection || !simulation) return
 
+    const controller = new AbortController()
     loading.value = true
 
     searchItems(stacUrl.value, {
@@ -27,24 +27,23 @@ export function ItemBrowser() {
         "forecast:start_time": { eq: startTime }
       },
       limit: 100
-    })
+    }, controller.signal)
       .then(result => {
         const fetched = result.features
-
         fetched.sort((a, b) =>
           (a.properties["forecast:step"] ?? 0) - (b.properties["forecast:step"] ?? 0)
         )
-
         normalizeAssets(fetched)
         items.value = fetched
       })
       .catch(err => {
+        if (err.name === "AbortError") return
         console.error(err)
         error.value = true
       })
-      .finally(() => {
-        loading.value = false
-      })
+      .finally(() => { loading.value = false })
+
+    return () => controller.abort()
   })
 
   if (loading.value) return <div class="state-msg">Loading items…</div>
@@ -122,12 +121,4 @@ function ItemCard({ item }) {
   )
 }
 
-function normalizeAssets(items) {
-  items.forEach(item => {
-    const assetsByVariable = {}
-    Object.values(item.assets).forEach(asset => {
-      assetsByVariable[asset.variable] = asset
-    })
-    item.assetsByVariable = assetsByVariable
-  })
-}
+

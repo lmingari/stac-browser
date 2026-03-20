@@ -34,11 +34,11 @@ const BASEMAPS = {
 
 export function createBaseLayer(name = "carto-light") {
 
-  const config = BASEMAPS[name] ?? BASEMAPS["carto-dark"]
-
   if (!BASEMAPS[name]) {
-    console.warn(`Unknown basemap "${name}", falling back to carto-dark`)
+    console.warn(`Unknown basemap "${name}", falling back to carto-light`)
   }
+
+  const config = BASEMAPS[name] ?? BASEMAPS["carto-light"]
 
   return new TileLayer({ source: config.source() })
 

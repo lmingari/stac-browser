@@ -1,41 +1,20 @@
-import { useSignal, useSignalEffect } from "@preact/signals"
 import { selectedCollection, selectedSimulation, selectedStartTime, stacUrl } from "../signals/store"
 import { searchItems } from "../api/stacClient"
+import { useFetchOptions } from "../hooks/useFetchOptions"
 
 export function StartTimeSelector() {
-
-  const options = useSignal([])
-  const loading = useSignal(false)
-  const error   = useSignal(false)
-
-  useSignalEffect(() => {
+  const { options, loading, error } = useFetchOptions((signal) => {
     const simulation = selectedSimulation.value
     const collection = selectedCollection.value
+    if (!simulation || !collection) return null
 
-    options.value = []
-    error.value   = false
-
-    if (!simulation || !collection) return
-
-    loading.value = true
-
-    searchItems(stacUrl.value, {
+    return searchItems(stacUrl.value, {
       collections: [collection],
       query: { "simulation": { eq: simulation } },
       limit: 100
-    })
-      .then(result => {
-        options.value = [...new Set(
-          result.features.map(f => f.properties["forecast:start_time"]).filter(Boolean)
-        )]
-      })
-      .catch(err => {
-        console.error(err)
-        error.value = true
-      })
-      .finally(() => {
-        loading.value = false
-      })
+    }, signal).then(result =>
+      [...new Set(result.features.map(f => f.properties["forecast:start_time"]).filter(Boolean))]
+    )
   })
 
   const disabled = !selectedSimulation.value || loading.value
