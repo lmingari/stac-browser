@@ -9,25 +9,23 @@ import { AssetList }          from "./AssetList"
 import { PanelToggle }        from "./PanelToggle"
 import { StepNavigator }      from "./StepNavigator"
 import { MapView }            from "../map/MapView"
+import { selectedItem }       from "../signals/store"
 
 export function App() {
 
   const browserRef = useRef(null)
+  const hasItem    = selectedItem.value !== null
 
   return (
     <div id="app">
 
       <div class="panel browser" ref={browserRef}>
         <div class="browser-header">
-          <div class="browser-wordmark">
-            <div class="browser-wordmark-icon">🛰</div>
-            <h1>STAC Browser</h1>
-          </div>
-          <div class="browser-subtitle">COG Visualiser</div>
+          <h1><i class="fa-solid fa-volcano"></i> STAC Browser</h1>
         </div>
 
-        <div class="browser-scroll">
-
+        {/* Top: filters — always visible, no scroll */}
+        <div class="browser-top">
           <div class="section">
             <h3>Catalogue</h3>
             <StacUrlInput />
@@ -39,17 +37,25 @@ export function App() {
             <SimulationSelector />
             <StartTimeSelector />
           </div>
+        </div>
 
-          <div class="section">
-            <h3>Items</h3>
-            <ItemBrowser />
+        {/* Bottom: items + assets split — fills remaining height */}
+        <div class={`browser-bottom ${hasItem ? "has-asset" : ""}`}>
+          <div class="browser-pane pane-items">
+            <div class="pane-label">Items</div>
+            <div class="pane-scroll">
+              <ItemBrowser />
+            </div>
           </div>
 
-          <div class="section">
-            <h3>Assets</h3>
-            <AssetList />
-          </div>
-
+          {hasItem && (
+            <div class="browser-pane pane-assets">
+              <div class="pane-label">Assets</div>
+              <div class="pane-scroll">
+                <AssetList />
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

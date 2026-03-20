@@ -1,4 +1,5 @@
 import { useSignal, useSignalEffect } from "@preact/signals"
+import { useRef, useEffect } from "preact/hooks"
 import { selectedCollection, selectedSimulation, selectedStartTime, selectedItem, items, itemGroups, stacUrl } from "../signals/store"
 import { searchItems, normalizeAssets } from "../api/stacClient"
 
@@ -50,75 +51,80 @@ export function ItemBrowser() {
   if (error.value)   return <div class="state-msg">Failed to load items</div>
   if (!items.value.length) return null
 
+  const groups = itemGroups.value
+
+  // If only one group, skip tabs and show flat list
+  if (groups.length === 1) {
+    return <ItemList items={groups[0].items} />
+  }
+
+  return <TabbedItemBrowser groups={groups} />
+}
+
+function TabbedItemBrowser({ groups }) {
+  const activeGroup = useSignal(groups[0]?.keyword ?? null)
+
+  // Keep active tab valid if groups change
+  const active = groups.find(g => g.keyword === activeGroup.value) ?? groups[0]
+
+  return (
+    <div class="item-browser">
+      <div class="item-tabs">
+        {groups.map(({ keyword, items: groupItems }) => (
+          <button
+            key={keyword}
+            class={`item-tab ${activeGroup.value === keyword ? "active" : ""}`}
+            onClick={() => activeGroup.value = keyword}
+          >
+            {keyword}
+            <span class="item-tab-count">{groupItems.length}</span>
+          </button>
+        ))}
+      </div>
+      {active && <ItemList items={active.items} />}
+    </div>
+  )
+}
+
+function ItemList({ items: listItems }) {
   return (
     <div class="item-list">
-      {itemGroups.value.map(({ keyword, items: groupItems }) => (
-        <ItemGroup key={keyword} keyword={keyword} items={groupItems} />
+      {listItems.map(item => (
+        <ItemRow key={item.id} item={item} />
       ))}
     </div>
   )
 }
 
-function ItemGroup({ keyword, items: groupItems }) {
-
-  const collapsed = useSignal(false)
-
-  return (
-    <div class="item-group">
-      <button
-        class="item-group-header"
-        onClick={() => collapsed.value = !collapsed.value}
-      >
-        <span class="item-group-label">{keyword}</span>
-        <span class="item-group-count">{groupItems.length}</span>
-        <span class="item-group-arrow">{collapsed.value ? "▸" : "▾"}</span>
-      </button>
-      {!collapsed.value && (
-        <div class="item-group-body">
-          {groupItems.map(item => (
-            <ItemCard key={item.id} item={item} />
-          ))}
-        </div>
-      )}
-    </div>
-  )
-}
-
-function ItemCard({ item }) {
-
+function ItemRow({ item }) {
   const isSelected = selectedItem.value?.id === item.id
-  const stepValue  = item.properties["forecast:step"]
+  const rowRef = useRef(null)
 
-  function select() {
-    selectedItem.value = item
-  }
+  useEffect(() => {
+    if (isSelected && rowRef.current) {
+      rowRef.current.scrollIntoView({ block: "nearest", behavior: "smooth" })
+    }
+  }, [isSelected])
+
+  const step       = item.properties["forecast:step"]
+  const validTime  = item.properties["forecast:valid_time"]
+
+  // Format valid time to be compact: "2024-01-15 06:00" instead of full ISO
+  const label = validTime
+    ? validTime.replace("T", " ").replace(/:00\.000Z$/, "").replace("Z", "")
+    : item.id
 
   return (
-    <label class="item-card">
+    <label ref={rowRef} class={`item-row ${isSelected ? "active" : ""}`}>
       <input
         type="radio"
         name="item"
         checked={isSelected}
-        onChange={select}
+        onChange={() => selectedItem.value = item}
       />
-      <div class="item-header">
-        <span class="item-valid">
-          {item.properties["forecast:valid_time"]
-            ? `Valid: ${item.properties["forecast:valid_time"]}`
-            : ""}
-        </span>
-        {stepValue != null && (
-          <span class="item-step">Step {stepValue}</span>
-        )}
-      </div>
-      <div class="item-body">
-        {item.properties["created"] && (
-          <div class="item-created">Created: {item.properties["created"]}</div>
-        )}
-        <div class="item-id">ID: {item.id}</div>
-      </div>
+      <span class="item-row-label">{label}</span>
+      {step != null && <span class="item-row-step">{step}</span>}
     </label>
   )
 }
-
 

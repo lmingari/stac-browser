@@ -88,17 +88,87 @@ html, body {
   transition: width 0.25s ease, min-width 0.25s ease;
 }
 
-.browser-scroll {
-  flex: 1;
+/* ── Left Panel inner layout ───────────────────── */
+
+.browser-top {
+  flex-shrink: 0;
   overflow-y: auto;
-  padding: 0 14px 20px;
+  padding: 0 14px 12px;
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
 }
 
-.browser-scroll::-webkit-scrollbar { width: 4px; }
-.browser-scroll::-webkit-scrollbar-track { background: transparent; }
-.browser-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.browser-top::-webkit-scrollbar { width: 4px; }
+.browser-top::-webkit-scrollbar-track { background: transparent; }
+.browser-top::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* Bottom split: items pane + optional assets pane */
+.browser-bottom {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  min-height: 0;
+}
+
+.browser-bottom.has-asset {
+  flex-direction: column;
+}
+
+.browser-pane {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}
+
+/* Assets pane gets a fixed share when present */
+.browser-bottom.has-asset .pane-items {
+  flex: 1 1 50%;
+  border-bottom: 1px solid var(--border);
+}
+
+.browser-bottom.has-asset .pane-assets {
+  flex: 0 0 40%;
+  max-height: 40%;
+}
+
+.pane-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 8px 14px 6px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pane-label::before {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.7;
+}
+
+.pane-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 14px 12px;
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.pane-scroll::-webkit-scrollbar { width: 4px; }
+.pane-scroll::-webkit-scrollbar-track { background: transparent; }
+.pane-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
 /* ── Left Panel toggle ──────────────────────── */
 
@@ -145,39 +215,14 @@ html, body {
   flex-shrink: 0;
 }
 
-.browser-wordmark {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
-
-.browser-wordmark-icon {
-  width: 24px;
-  height: 24px;
-  background: var(--accent);
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  flex-shrink: 0;
-}
-
-.browser-wordmark h1 {
+.browser-header h1 {
   margin: 0;
   font-size: 13px;
   font-weight: 600;
   color: var(--text-primary);
-  letter-spacing: 0.01em;
-}
-
-.browser-subtitle {
-  margin: 3px 0 0 33px;
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 /* ── Right Panel (Map) ─────────────────────────── */
@@ -190,8 +235,6 @@ html, body {
   background: var(--bg-base);
   position: relative;
 }
-
-/* ── Section Box ───────────────────────────────── */
 
 .section {
   background: var(--bg-section);
@@ -225,7 +268,7 @@ html, body {
 
 /* ── Form Elements ─────────────────────────────── */
 
-label {
+.section label {
   display: block;
   font-size: 11px;
   font-weight: 500;
