@@ -1,14 +1,11 @@
 import { useRef } from "preact/hooks"
 
+import { CollectionSelector, SimulationSelector, StartTimeSelector } from "../filters"
+import { MapView, ColorBarVertical }  from "../map"
+import { PanelToggle, StepNavigator } from "../layout"
 import { StacUrlInput }       from "../catalogue/StacUrlInput"
-import { CollectionSelector } from "../filters/CollectionSelector"
-import { SimulationSelector } from "../filters/SimulationSelector"
-import { StartTimeSelector }  from "../filters/StartTimeSelector"
 import { ItemBrowser }        from "../items/ItemBrowser"
 import { AssetList }          from "../assets/AssetList"
-import { PanelToggle }        from "./PanelToggle"
-import { StepNavigator }      from "./StepNavigator"
-import { MapView }            from "../map/MapView"
 import { selectedItem }       from "../../signals/store"
 
 export function App() {
@@ -63,6 +60,7 @@ export function App() {
 
       <div class="panel map">
         <MapView />
+        <ColorBarVertical />
         <StepNavigator />
       </div>
 

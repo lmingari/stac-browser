@@ -7,6 +7,6 @@ import "./styles/navigator.css"
 import "./styles/map.css"
 
 import { render } from "preact"
-import { App } from "./components/layout/App"
+import { App } from "./components/layout"
 
 render(<App />, document.getElementById("root"))
