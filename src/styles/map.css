@@ -1,0 +1,134 @@
+/* ================================================
+   STAC BROWSER — Map
+   Map panel and OpenLayers overrides
+================================================ */
+
+#map {
+  flex: 1;
+  width: 100%;
+  position: relative;
+}
+
+/* ── OpenLayers overrides ──────────────────────── */
+
+.ol-attribution {
+  font-size: 9px !important;
+  background: rgba(18, 21, 28, 0.75) !important;
+  color: var(--text-muted) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+.ol-attribution a { color: var(--text-secondary) !important; }
+
+.ol-zoom {
+  top: auto !important;
+  bottom: 14px !important;
+  left: 14px !important;
+}
+
+.ol-zoom .ol-zoom-in,
+.ol-zoom .ol-zoom-out {
+  background: rgba(18, 21, 28, 0.9) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-primary) !important;
+  font-size: 18px !important;
+  font-weight: 300 !important;
+  backdrop-filter: blur(8px) !important;
+  transition: background 0.12s ease, border-color 0.12s ease !important;
+}
+
+.ol-zoom .ol-zoom-in:hover,
+.ol-zoom .ol-zoom-out:hover {
+  background: var(--bg-card-hover) !important;
+  border-color: var(--border-focus) !important;
+}
+
+/* ── Color bar ─────────────────────────────────── */
+
+.colorbar {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(340px, 60%);
+  background: rgba(18, 21, 28, 0.88);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 12px 10px;
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  pointer-events: none;
+}
+
+.colorbar-title {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-label);
+  letter-spacing: 0.04em;
+  margin-bottom: 5px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.colorbar-bar {
+  height: 12px;
+  border-radius: 3px;
+  width: 100%;
+}
+
+.colorbar-ticks {
+  position: relative;
+  height: 16px;
+  margin-top: 2px;
+}
+
+.colorbar-tick {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 9px;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.colorbar-unit {
+  text-align: center;
+  font-size: 9px;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+/* ── Color bar vertical ────────────────────────── */
+
+.colorbar-v {
+  position: absolute;
+  bottom: 36px;
+  right: 14px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  pointer-events: none;
+}
+
+.colorbar-v-bar {
+  width: 12px;
+  height: 120px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+}
+
+.colorbar-v-max,
+.colorbar-v-min {
+  font-size: 9px;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--text-secondary);
+  background: rgba(18, 21, 28, 0.88);
+  padding: 1px 4px;
+  border-radius: 3px;
+  white-space: nowrap;
+}

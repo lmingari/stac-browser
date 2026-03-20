@@ -1,7 +1,6 @@
 import { computed } from "@preact/signals"
-import { items, selectedItem, selectedAsset, logScale } from "../signals/store"
+import { items, selectedItem, selectedAsset, logScale } from "../../signals/store"
 
-// Sequence of items sharing the same variable AND keywords as the selected item
 const sequence = computed(() => {
   const asset = selectedAsset.value
   const item  = selectedItem.value
@@ -42,13 +41,13 @@ export function StepNavigator() {
   }
 
   return (
-    <div className="step-nav">
-      <div className="step-nav-buttons">
-        <button className="step-prev" onClick={prev}>‹</button>
-        <span className="step-label">Step {asset.step}</span>
-        <button className="step-next" onClick={next}>›</button>
+    <div class="step-nav">
+      <div class="step-nav-buttons">
+        <button class="step-prev" onClick={prev}>‹</button>
+        <span class="step-label">Step {asset.step}</span>
+        <button class="step-next" onClick={next}>›</button>
       </div>
-      <label className="step-nav-log">
+      <label class="step-nav-log">
         <input
           type="checkbox"
           checked={logScale.value}

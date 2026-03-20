@@ -1,4 +1,4 @@
-import { collections, selectedCollection } from "../signals/store"
+import { collections, selectedCollection } from "../../signals/store"
 
 export function CollectionSelector() {
   return (
