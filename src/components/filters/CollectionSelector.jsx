@@ -1,19 +1,17 @@
 import { collections, selectedCollection } from "../../signals/store"
+import { BaseSelector } from "./BaseSelector"
 
 export function CollectionSelector() {
   return (
-    <div>
-      <label>Collection</label>
-      <select
-        value={selectedCollection.value ?? ""}
-        onChange={e => selectedCollection.value = e.target.value || null}
-        disabled={!collections.value.length}
-      >
-        <option value="">Select collection</option>
-        {collections.value.map(c => (
-          <option key={c.id} value={c.id}>{c.title ?? c.id}</option>
-        ))}
-      </select>
-    </div>
+    <BaseSelector
+      label="Collection"
+      placeholder="Select collection"
+      value={selectedCollection.value}
+      onChange={v => selectedCollection.value = v}
+      disabled={!collections.value.length}
+      options={collections.value}
+      getKey={c => c.id}
+      getLabel={c => c.title ?? c.id}
+    />
   )
 }

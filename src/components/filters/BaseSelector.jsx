@@ -1,4 +1,6 @@
-export function BaseSelector({ label, value, onChange, disabled, loading, error, placeholder, options }) {
+export function BaseSelector({ label, value, onChange, disabled, loading, error, placeholder, options, getKey, getLabel }) {
+  const key   = getKey   ?? (o => o)
+  const label_ = getLabel ?? (o => o)
   return (
     <div>
       <label>{label}</label>
@@ -7,7 +9,7 @@ export function BaseSelector({ label, value, onChange, disabled, loading, error,
           {loading ? "Loading…" : error ? "Failed to load" : placeholder}
         </option>
         {options.map(o => (
-          <option key={o} value={o}>{o}</option>
+          <option key={key(o)} value={key(o)}>{label_(o)}</option>
         ))}
       </select>
     </div>

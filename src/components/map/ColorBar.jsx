@@ -1,21 +1,21 @@
+import { computed } from "@preact/signals"
 import { selectedItem, selectedAsset, logScale } from "../../signals/store"
-import { getRenderConfig } from "../../map/renderConfig"
-import { getColormap } from "../../map/colormap"
+import { getRenderConfig, getColormap } from "../../map"
 
 export function ColorBar() {
   const asset = selectedAsset.value
   const item  = selectedItem.value
+  if (!item || !asset) return null
 
-  if (!asset || !item) return null
-
-  const render = getRenderConfig(item, asset.variable, logScale.value)
+  const render = getRenderConfig(item, asset.variable)
   if (!render.rescale) return null
 
   const [min, max] = render.rescale
   const colors     = getColormap(render.colormap, 256, 1)
   const gradient   = colors.map(([r, g, b]) => `rgb(${r},${g},${b})`).join(",")
-  const unit       = asset.unit ?? ""
-  const log        = render.log
+  const log        = logScale.value
+  const label      = asset.label ?? asset.title ?? asset.variable
+  const unit       = asset.unit ?? null
 
   const ticks = log
     ? logTicks(min, max)
@@ -23,7 +23,7 @@ export function ColorBar() {
 
   return (
     <div class="colorbar">
-      <div class="colorbar-title">{asset.label ?? asset.title ?? asset.variable}</div>
+      <div class="colorbar-title">{label}</div>
       <div class="colorbar-bar" style={{ background: `linear-gradient(to right, ${gradient})` }} />
       <div class="colorbar-ticks">
         {ticks.map(({ value, pct }) => (
@@ -40,10 +40,9 @@ export function ColorBar() {
 export function ColorBarVertical() {
   const asset = selectedAsset.value
   const item  = selectedItem.value
+  if (!item || !asset) return null
 
-  if (!asset || !item) return null
-
-  const render = getRenderConfig(item, asset.variable, logScale.value)
+  const render = getRenderConfig(item, asset.variable)
   if (!render.rescale) return null
 
   const [min, max] = render.rescale

@@ -14,6 +14,7 @@ export const selectedAsset      = signal(null)
 export const selectedKeyword    = signal(null)
 
 export const logScale           = signal(false)
+export const rasterVisible      = signal(true)
 
 // ── Cascade resets ─────────────────────────────────────────────────────────
 // When a parent changes, reset all downstream selections.

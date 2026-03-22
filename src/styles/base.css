@@ -125,13 +125,14 @@ html, body {
 
 /* Assets pane gets a fixed share when present */
 .browser-bottom.has-asset .pane-items {
-  flex: 1 1 50%;
+  flex: 0 0 auto;
+  max-height: 50%;
   border-bottom: 1px solid var(--border);
 }
 
 .browser-bottom.has-asset .pane-assets {
-  flex: 0 0 40%;
-  max-height: 40%;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .pane-label {

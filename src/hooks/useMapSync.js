@@ -1,9 +1,6 @@
 import { effect } from "@preact/signals"
-import { stacUrl, selectedItem, selectedAsset, logScale } from "../signals/store"
-import { zoomToBBox }      from "../map/zoomToBBox"
-import { drawGeometry }    from "../map/drawGeometry"
-import { updateRaster }    from "../map/rasterLayer"
-import { getRenderConfig } from "../map/renderConfig"
+import { stacUrl, selectedItem, selectedAsset, logScale, rasterVisible } from "../signals/store"
+import { zoomToBBox, drawGeometry, updateRaster, getRenderConfig }       from "../map"
 import { resolveAssetHref } from "../api"
 
 /**
@@ -19,8 +16,10 @@ export function useMapSync(map, footprintSource) {
   let currentItemId = null
 
   const dispose = effect(() => {
-    const asset = selectedAsset.value
-    const item  = selectedItem.value
+    const asset  = selectedAsset.value
+    const item   = selectedItem.value
+    const log    = logScale.value
+    const base   = stacUrl.value
 
     if (!asset || !item) return
 
@@ -30,10 +29,18 @@ export function useMapSync(map, footprintSource) {
       currentItemId = item.id
     }
 
-    const url    = resolveAssetHref(stacUrl.value, asset)
-    const render = getRenderConfig(item, asset.variable, logScale.value)
-    rasterLayer  = updateRaster(map, url, rasterLayer, render)
+    const url    = resolveAssetHref(base, asset)
+    const render = { ...getRenderConfig(item, asset.variable), log }
+    rasterLayer = updateRaster(map, url, rasterLayer, render)
   })
 
-  return dispose
+  const disposeVisibility = effect(() => {
+      const visible = rasterVisible.value
+      if (rasterLayer) rasterLayer.setVisible(visible)
+  })
+
+   return () => {
+     dispose()
+     disposeVisibility()
+   }
 }

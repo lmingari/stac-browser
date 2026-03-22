@@ -1,3 +1,2 @@
-export { MapView }         from "./MapView"
-export { ColorBar }        from "./ColorBar"
-export { ColorBarVertical } from "./ColorBar"
+export { MapView }                    from "./MapView"
+export { ColorBar, ColorBarVertical } from "./ColorBar"

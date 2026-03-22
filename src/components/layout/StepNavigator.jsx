@@ -1,5 +1,5 @@
 import { computed } from "@preact/signals"
-import { items, selectedItem, selectedAsset, logScale } from "../../signals/store"
+import { items, selectedItem, selectedAsset, logScale, rasterVisible } from "../../signals/store"
 
 const sequence = computed(() => {
   const asset = selectedAsset.value
@@ -54,6 +54,14 @@ export function StepNavigator() {
           onChange={e => logScale.value = e.target.checked}
         />
         Log scale
+      </label>
+      <label class="step-nav-log">
+        <input
+          type="checkbox"
+          checked={!rasterVisible.value}
+          onChange={e => rasterVisible.value = !e.target.checked} 
+        />
+        Hide raster
       </label>
     </div>
   )

@@ -3,9 +3,8 @@ import Map from "ol/Map"
 import View from "ol/View"
 import { fromLonLat } from "ol/proj"
 
-import { createBaseLayer }      from "../../map/baseLayer"
-import { createFootprintLayer } from "../../map/footprintLayer"
-import { useMapSync }           from "../../hooks"
+import { createBaseLayer, createFootprintLayer } from "../../map"
+import { useMapSync }                            from "../../hooks"
 
 export function MapView() {
 
