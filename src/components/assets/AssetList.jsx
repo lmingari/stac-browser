@@ -43,7 +43,7 @@ function AssetCard({ assetKey, asset }) {
         {asset.created && <div class="asset-time">Created: {asset.created}</div>}
       </div>
       {assetUrl && (
-        <a class="btn btn-download" href={assetUrl} download>⬇</a>
+        <a class="btn btn-download" href={assetUrl} download><i class="fa-solid fa-download"></i></a>
       )}
     </label>
   )

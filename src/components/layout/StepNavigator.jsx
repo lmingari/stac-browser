@@ -47,7 +47,7 @@ export function StepNavigator() {
         <span class="step-label">Step {asset.step}</span>
         <button class="step-next" onClick={next}>›</button>
       </div>
-      <label class="step-nav-log">
+      <label class="step-nav-check">
         <input
           type="checkbox"
           checked={logScale.value}
@@ -55,7 +55,7 @@ export function StepNavigator() {
         />
         Log scale
       </label>
-      <label class="step-nav-log">
+      <label class="step-nav-check">
         <input
           type="checkbox"
           checked={!rasterVisible.value}

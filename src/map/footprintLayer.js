@@ -17,7 +17,7 @@ export function createFootprintLayer() {
         width: 2
       }),
       fill: new Fill({
-        color: "rgba(255,0,0,0.1)"
+        color: "rgba(255,0,0,0.05)"
       })
     })
   })

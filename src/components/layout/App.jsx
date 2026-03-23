@@ -1,59 +1,75 @@
+import { useSignal } from "@preact/signals"
 import { useRef } from "preact/hooks"
 
 import { CollectionSelector, SimulationSelector, StartTimeSelector, KeywordFilter } from "../filters"
-import { MapView, ColorBarVertical }  from "../map"
-import { PanelToggle, StepNavigator } from "../layout"
-import { StacUrlInput }       from "../catalogue/StacUrlInput"
-import { ItemBrowser }        from "../items/ItemBrowser"
-import { AssetList }          from "../assets/AssetList"
-import { selectedItem }       from "../../signals/store"
+import { MapView, ColorBarVertical }                                 from "../map"
+import { PanelToggle, StepNavigator }                                from "../layout"
+import { StacUrlInput }                                              from "../catalogue/StacUrlInput"
+import { ItemBrowser }                                               from "../items/ItemBrowser"
+import { AssetList }                                                 from "../assets/AssetList"
+import { selectedItem }                                              from "../../signals/store"
+
+const TABS = [
+  { id: "Catalogue", label: <><i class="fa-solid fa-link"></i> Catalogue</> },
+  { id: "Filters",   label: <><i class="fa-solid fa-sliders"></i> Filters</> },
+  { id: "Items",     label: <><i class="fa-solid fa-layer-group"></i> Items</> },
+]
 
 export function App() {
-
   const browserRef = useRef(null)
+  const activeTab  = useSignal("Catalogue")
   const hasItem    = selectedItem.value !== null
 
   return (
     <div id="app">
-
       <div class="panel browser" ref={browserRef}>
+
         <div class="browser-header">
           <h1><i class="fa-solid fa-volcano"></i> STAC Browser</h1>
         </div>
 
-        {/* Top: filters — always visible, no scroll */}
-        <div class="browser-top">
-          <div class="section">
-            <h3>Catalogue</h3>
+        <div class="browser-tabs">
+          {TABS.map(({ id, label }) => (
+            <button
+              key={id}
+              class={`browser-tab ${activeTab.value === id ? "active" : ""}`}
+              onClick={() => activeTab.value = id}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
+        <div class="tab-content">
+
+          <div class={`tab-pane ${activeTab.value === "Catalogue" ? "" : "hidden"}`}>
             <StacUrlInput />
           </div>
-
-          <div class="section">
-            <h3>Filters</h3>
+  
+          <div class={`tab-pane ${activeTab.value === "Filters" ? "" : "hidden"}`}>
             <CollectionSelector />
             <SimulationSelector />
             <StartTimeSelector />
             <KeywordFilter />
           </div>
-        </div>
-
-        {/* Bottom: items + assets split — fills remaining height */}
-        <div class={`browser-bottom ${hasItem ? "has-asset" : ""}`}>
-          <div class="browser-pane pane-items">
-            <div class="pane-label">Items</div>
-            <div class="pane-scroll">
-              <ItemBrowser />
-            </div>
-          </div>
-
-          {hasItem && (
-            <div class="browser-pane pane-assets">
-              <div class="pane-label">Assets</div>
-              <div class="pane-scroll">
-                <AssetList />
+  
+          <div class={`items-split ${activeTab.value === "Items" ? "" : "hidden"}`}>
+            <div class="items-section">
+              <div class="section-label">Items</div>
+              <div class="section-scroll">
+                <ItemBrowser />
               </div>
             </div>
-          )}
+            {hasItem && (
+              <div class="assets-section">
+                <div class="section-label">Assets</div>
+                <div class="section-scroll">
+                  <AssetList />
+                </div>
+              </div>
+            )}
+          </div>
+
         </div>
       </div>
 
@@ -64,7 +80,6 @@ export function App() {
         <ColorBarVertical />
         <StepNavigator />
       </div>
-
     </div>
   )
 }

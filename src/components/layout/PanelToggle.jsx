@@ -11,7 +11,10 @@ export function PanelToggle({ browserRef }) {
 
   return (
     <button class="panel-toggle" onClick={toggle} title="Toggle panel">
-      {collapsed.value ? "›" : "‹"}
+      {collapsed.value 
+        ? <i class="fa-solid fa-chevron-right"></i>
+        : <i class="fa-solid fa-chevron-left"></i>
+      }
     </button>
   )
 }

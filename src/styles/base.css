@@ -5,7 +5,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
 
-/* ── CSS Variables ─────────────────────────────── */
+/* ── Variables ─────────────────────────────────── */
 
 :root {
   --bg-base:        #0d0f14;
@@ -25,8 +25,6 @@
   --accent-text:    #6fa8ff;
 
   --success:        #2dd4a0;
-  --success-dim:    rgba(45, 212, 160, 0.12);
-  --warning:        #f5a623;
   --error:          #e05252;
 
   --text-primary:   #dce4f0;
@@ -43,11 +41,9 @@
   --radius-lg:      10px;
 }
 
-/* ── Reset & Base ──────────────────────────────── */
+/* ── Reset ─────────────────────────────────────── */
 
-*, *::before, *::after {
-  box-sizing: border-box;
-}
+*, *::before, *::after { box-sizing: border-box; }
 
 html, body {
   margin: 0;
@@ -60,217 +56,9 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── App Layout ────────────────────────────────── */
+/* ── Forms ─────────────────────────────────────── */
 
-#app {
-  display: flex;
-  height: 100vh;
-  overflow: hidden;
-}
-
-/* ── Panel Base ────────────────────────────────── */
-
-.panel {
-  padding: 0;
-  overflow: auto;
-}
-
-/* ── Left Panel (Browser) ──────────────────────── */
-
-.browser {
-  width: var(--panel-width);
-  min-width: var(--panel-width);
-  background: var(--bg-panel);
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  transition: width 0.25s ease, min-width 0.25s ease;
-}
-
-/* ── Left Panel inner layout ───────────────────── */
-
-.browser-top {
-  flex-shrink: 0;
-  overflow-y: auto;
-  padding: 0 14px 12px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
-}
-
-.browser-top::-webkit-scrollbar { width: 4px; }
-.browser-top::-webkit-scrollbar-track { background: transparent; }
-.browser-top::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-/* Bottom split: items pane + optional assets pane */
-.browser-bottom {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  border-top: 1px solid var(--border);
-  min-height: 0;
-}
-
-.browser-bottom.has-asset {
-  flex-direction: column;
-}
-
-.browser-pane {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  flex: 1;
-}
-
-/* Assets pane gets a fixed share when present */
-.browser-bottom.has-asset .pane-items {
-  flex: 0 0 auto;
-  max-height: 50%;
-  border-bottom: 1px solid var(--border);
-}
-
-.browser-bottom.has-asset .pane-assets {
-  flex: 1 1 auto;
-  min-height: 0;
-}
-
-.pane-label {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  padding: 8px 14px 6px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.pane-label::before {
-  content: '';
-  display: inline-block;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--accent);
-  opacity: 0.7;
-}
-
-.pane-scroll {
-  flex: 1;
-  overflow-y: auto;
-  padding: 0 14px 12px;
-  min-height: 0;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
-}
-
-.pane-scroll::-webkit-scrollbar { width: 4px; }
-.pane-scroll::-webkit-scrollbar-track { background: transparent; }
-.pane-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-/* ── Left Panel toggle ──────────────────────── */
-
-.panel-toggle {
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  left: var(--panel-width);
-  z-index: 100;
-  width: 16px;
-  height: 40px;
-  background: var(--bg-section);
-  border: 1px solid var(--border);
-  border-left: none;
-  border-radius: 0 var(--radius) var(--radius) 0;
-  color: var(--text-secondary);
-  cursor: pointer;
-  font-size: 13px;
-  padding: 0;
-  transition: left 0.25s ease, background 0.12s ease, color 0.12s ease;
-}
-
-.panel-toggle:hover {
-  background: var(--bg-card-hover);
-  color: var(--accent-text);
-}
-
-.browser.collapsed {
-  width: 0;
-  min-width: 0;
-  overflow: hidden;
-}
-
-.browser.collapsed ~ .panel-toggle {
-  left: 0;
-}
-
-/* ── Panel Header ──────────────────────────────── */
-
-.browser-header {
-  padding: 16px 14px 14px;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg-panel);
-  flex-shrink: 0;
-}
-
-.browser-header h1 {
-  margin: 0;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-primary);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  justify-content: flex-end;
-}
-
-/* ── Right Panel (Map) ─────────────────────────── */
-
-.map {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  background: var(--bg-base);
-  position: relative;
-}
-
-.section {
-  background: var(--bg-section);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 13px;
-  margin-top: 12px;
-}
-
-.section h3 {
-  margin: 0 0 11px 0;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.section h3::before {
-  content: '';
-  display: inline-block;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--accent);
-  opacity: 0.7;
-}
-
-/* ── Form Elements ─────────────────────────────── */
-
-.section label {
+label {
   display: block;
   font-size: 11px;
   font-weight: 500;
@@ -324,7 +112,7 @@ select option {
   color: var(--text-primary);
 }
 
-/* ── Primary Button ────────────────────────────── */
+/* ── Buttons ───────────────────────────────────── */
 
 .btn-primary {
   padding: 7px 13px;
@@ -344,7 +132,7 @@ select option {
 .btn-primary:hover  { background: #4a8be5; }
 .btn-primary:active { transform: scale(0.96); }
 
-/* ── Empty / Loading States ────────────────────── */
+/* ── States ────────────────────────────────────── */
 
 .state-msg {
   padding: 14px 8px;

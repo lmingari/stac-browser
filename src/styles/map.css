@@ -124,11 +124,11 @@
 
 .colorbar-v-max,
 .colorbar-v-min {
-  font-size: 9px;
+  font-size: 13px;
   font-family: 'IBM Plex Mono', monospace;
   color: var(--text-secondary);
   background: rgba(18, 21, 28, 0.88);
-  padding: 1px 4px;
+  padding: 3px 4px;
   border-radius: 3px;
   white-space: nowrap;
 }
