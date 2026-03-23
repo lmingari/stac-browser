@@ -1,6 +1,6 @@
 import { effect } from "@preact/signals"
 import { stacUrl, selectedItem, selectedAsset, logScale, rasterVisible } from "../signals/store"
-import { zoomToBBox, drawGeometry, updateRaster, getRenderConfig }       from "../map"
+import { zoomToBBox, bboxToExtent, drawGeometry, updateRaster, getRenderConfig } from "../map"
 import { resolveAssetHref } from "../api"
 
 /**
@@ -14,6 +14,7 @@ import { resolveAssetHref } from "../api"
 export function useMapSync(map, footprintSource) {
   let rasterLayer   = null
   let currentItemId = null
+  let currentExtent = null
 
   const dispose = effect(() => {
     const asset  = selectedAsset.value
@@ -24,14 +25,15 @@ export function useMapSync(map, footprintSource) {
     if (!asset || !item) return
 
     if (item.id !== currentItemId) {
-      zoomToBBox(map, item.bbox)
+      currentExtent = bboxToExtent(item.bbox)
+      zoomToBBox(map, currentExtent)
       drawGeometry(footprintSource, item.geometry)
       currentItemId = item.id
     }
 
     const url    = resolveAssetHref(base, asset)
     const render = { ...getRenderConfig(item, asset.variable), log }
-    rasterLayer = updateRaster(map, url, rasterLayer, render)
+    rasterLayer = updateRaster(map, url, rasterLayer, render, currentExtent)
   })
 
   const disposeVisibility = effect(() => {

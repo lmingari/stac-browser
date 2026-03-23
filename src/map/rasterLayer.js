@@ -3,7 +3,7 @@ import WebGLTileLayer from "ol/layer/WebGLTile"
 
 import { buildColorRamp } from "./colormap.js"
 
-export function updateRaster(map, url, previousLayer, render) {
+export function updateRaster(map, url, previousLayer, render, extent) {
 
   if (!url) return previousLayer
 
@@ -13,7 +13,7 @@ export function updateRaster(map, url, previousLayer, render) {
     sources: [{ url, bands: [1] }]
   })
 
-  const layerOptions = { source }
+  const layerOptions = { source, extent }
 
   if (render.rescale) {
 
